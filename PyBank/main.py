@@ -25,9 +25,6 @@ with open(csv_path) as csvfile:
         month_count.append(row[0])
         total.append(int(row[1]))
 
-    # print(len(month_count))
-    # print(sum(total))
-
     # sum and average of the changes in "Profit/Losses" over the entire period
     total_profit_loss = []
     for i in range (1, len(total)):
@@ -35,19 +32,16 @@ with open(csv_path) as csvfile:
         total_profit_loss.append(profit_loss_change)
 
     avg_change = (sum(total_profit_loss)/len(total_profit_loss))
-    # print(round(avg_change, 2))
 
     # greatest increase in profits(date and amount) over the entire period
     greatest_profit = max(total_profit_loss)
     greatest_profit_month_index = total_profit_loss.index(greatest_profit)
     greatest_profit_month = month_count[greatest_profit_month_index+1]
-    # print(greatest_profit, greatest_profit_month)
 
     # greatest decrease in profits(date and amount) over the entire period
     greatest_loss = min(total_profit_loss)
     greatest_loss_month_index = total_profit_loss.index(greatest_loss)
     greatest_loss_month = month_count[greatest_loss_month_index + 1]
-    # print(greatest_loss, greatest_loss_month)
 
 # print final analysis to the terminal
 print("Financial Analysis")
@@ -56,4 +50,15 @@ print(f"Total Months:  {len(month_count)}")
 print(f"Total:  ${sum(total)}")
 print(f"Average Change:  ${round(avg_change, 2)}")
 print(f"Greatest Increase in Profits:  {greatest_profit_month} (${greatest_profit})")
-print(f"Greatest Decrease in Losses:  {greatest_loss_month} (${greatest_loss})")
+print(f"Greatest Decrease in Profits:  {greatest_loss_month} (${greatest_loss})")
+
+# export to a txt file with the results in new line each
+with open('../PyBank/analysis/Results.txt', 'w') as output:
+    output.write("Financial Analysis\n")
+    output.write("----------------------------\n")
+    output.write(f"Total Months:  {len(month_count)}\n")
+    output.write(f"Total:  ${sum(total)}\n")
+    output.write(f"Average Change:  ${round(avg_change, 2)}\n")
+    output.write(f"Greatest Increase in Profits:  {greatest_profit_month} (${greatest_profit})\n")
+    output.write(f"Greatest Decrease in Profits:  {greatest_loss_month} (${greatest_loss})\n")
+
